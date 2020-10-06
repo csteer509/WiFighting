@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from scapy.all import *
+import time
 
 class Wifi:
 
@@ -11,19 +12,18 @@ class Wifi:
 
 		probeRequest = RadioTap()/probe/essid
 
-		probeResponse = srp1(probeRequest, iface=iface)
-		probeResponse.show()
+		sendp(probeRequest, iface=iface)
+		time.sleep(1)
 
 		authentication = Dot11(type=0, subtype=11, addr1=dstMAC, addr2=srcMAC, addr3=dstMAC)/Dot11Auth(algo=0, seqnum=1, status=0)
 
 		authenticationRequest = RadioTap()/authentication
 
-		authenticationResponse = srp1(authenticationRequest, iface=iface)
-		authenticationResponse.show()
+		sendp(authenticationRequest, iface=iface)
+		time.sleep(1)
 
 		association = Dot11(type=0, subtype=0, addr1=dstMAC, addr2=srcMAC, addr3=dstMAC)/Dot11AssoReq(cap=0x1100, listen_interval=0x00a)
 
 		associationRequest = RadioTap()/association/essid
 
-		associationResponse = srp1(associationRequest, iface=iface)
-		associationResponse.show()
+		sendp(associationRequest, iface=iface)
