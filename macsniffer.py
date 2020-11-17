@@ -18,3 +18,10 @@ class MACSniffer:
 		
 	def getMACs(self):
 		return self.macs
+		
+	def getUniqueMACs(self):
+		uniqueMACS = []
+		for x in self.macs:
+			if x not in uniqueMACS:
+				uniqueMACS.append(x)
+		return uniqueMACS

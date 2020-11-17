@@ -5,7 +5,7 @@ import time
 
 class Wifi:
 
-	def connect(SSID, srcMAC, dstMAC, iface):
+	def connect(self, SSID, srcMAC, dstMAC, iface):
 		essid = Dot11Elt(ID='SSID', info=SSID)/Dot11Elt(ID='Rates', info='\x82\x84\x8b\x96\x0c\x12\x18')/Dot11Elt(ID='ESRates', info='\x30\x48\x60\x6c')
 		
 		probe = Dot11(type=0, subtype=4, addr1=dstMAC, addr2=srcMAC, addr3=dstMAC)/Dot11ProbeReq()
@@ -26,4 +26,6 @@ class Wifi:
 
 		associationRequest = RadioTap()/association/essid
 
-		sendp(associationRequest, iface=iface)
+		answer = srp1(associationRequest, iface=iface, timeout=3, retry=1)
+		
+		return answer
