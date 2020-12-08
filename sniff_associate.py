@@ -4,12 +4,14 @@ from macsniffer import *
 from wifi import *
 from datetime import *
 from time import *
+import csv
+
 # from xlwt import * Seems like a good module for porting to excel
 
 # Variables below should be changed as necessary
-source_interface = ''
-wifi_name = ''
-wifi_mac = ''
+source_interface = 'wlxe84e0681145b'
+wifi_name = 'WeenieHutJr'
+wifi_mac = 'c8:52:61:b4:c8:60'
 
 ''' Code below sniffs surrounding area for MAC addresses '''
 print('Just one moment, collecting MAC addresses...')
@@ -35,6 +37,11 @@ for mac in umacs:
 	else:
 		print('Error - Status code: ' + layer.fields['status'])
 
+#variables needed for csv output
+fields = ['MAC', 'Session_AP_Name', 'Year', 'Month', 'Date', 'Start_Time', 'End_Time', 'Unix_Start_Time', 'Unix_End_Time']
+filename = "output.csv"
+rows = []
+
 print('----------------')
 print('Output for WifiTrace: ')
 for mac in connected_macs:
@@ -48,8 +55,15 @@ for mac in connected_macs:
 	print('Unix Start: ' + str(int(time())))
 	print('Unix End: ' + str(int(time()))) #This will also have to change
 	print('----------------------------')
+	#apprend row containing MAC data for csv file
+	rows.append([mac, wifi_name, strftime('%Y', gmtime()), strftime('%b', gmtime()), strftime('%m-%d', gmtime()), strftime('%H:%M', gmtime()), strftime('%H:%M', gmtime()), str(int(time())), str(int(time()))])
 
-		
+with open(filename, 'w') as csvfile:
+	csvwriter = csv.writer(csvfile)
+	csvwriter.writerow(fields)
+	csvwriter.writerows(rows)
+
+
 '''
 Random shit that I used throughout this process, some of which even works!
 ~~~ Mostly bad stuff
