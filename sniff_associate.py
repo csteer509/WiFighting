@@ -63,18 +63,3 @@ with open(filename, 'w') as csvfile:
 	csvwriter.writerow(fields)
 	csvwriter.writerows(rows)
 
-
-'''
-Random shit that I used throughout this process, some of which even works!
-~~~ Mostly bad stuff
-answer.show2(dump=False, indent=3, lvl='', label_lvl='')
-print(answer.layers())
-print(answer.getlayer(scapy.layers.dot11.Dot11AssoResp, nb=1, _track=None, _subclass=None).getFieldVal('status'))
-layer = answer.getlayer(scapy.layers.dot11.Dot11AssoResp, nb=1, _track=None, _subclass=None)
-fields = layer.field()
-print(fields)
-print(answer.getfield(answer, 'status'))
-~~~ Good stuff below
-layer = (answer.getlayer(scapy.layers.dot11.Dot11AssoResp, nb=1, _track=None, _subclass=None))
-print(layer.fields["status"])
-'''
